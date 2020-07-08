@@ -7,12 +7,12 @@ We will do so by create a basic Pizza shop data model.
 ## Task: Create a pizza shop data model
 
 * Create Mongoose schemas to realize your pizza store data model
-    * Create a pizza schema (fields: name, price)
-    * Create an order schema (field: date of the order)
+    * Create a pizza model (fields: name, price)
+    * Create an order model (field: date of the order)
 
 * Setup relationships between Pizzas, Orders and Customers
-    * Place a ref to the customer in the order schema ("Every order has exaxtly ONE customer")
-    * Place a array ref to the pizzas schema in the order schema ("Every order can have ONE up to MANY pizzas")
+    * Place a ref to the customer model in the order schema ("Every order has exaxtly ONE customer")
+    * Place a array ref to the pizzas model in the order schema ("Every order can have ONE up to MANY pizzas")
    * use a "ref" field to declare relations: ` { type: Schema.Types.ObjectId, ref: '<OtherModel>' } `
  
 
