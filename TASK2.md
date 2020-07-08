@@ -14,6 +14,8 @@ We will do so by create a basic Pizza shop data model.
     * Place a ref to the customer model in the order schema ("Every order has exaxtly ONE customer")
     * Place a array ref to the pizzas model in the order schema ("Every order can have ONE up to MANY pizzas")
    * use a "ref" field to declare relations: ` { type: Schema.Types.ObjectId, ref: '<OtherModel>' } `
+   * creating multiple "refs": ` [{ type: Schema.Types.ObjectId, ref: '<OtherModel>' }] `
+    * => I want to state many Pizzas IDs in an Order
  
 
 ## BONUS TASK
