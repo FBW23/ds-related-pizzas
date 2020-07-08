@@ -9,6 +9,8 @@ We will do so by create a basic Pizza shop data model.
 * Create Mongoose schemas to realize your pizza store data model
     * Create a pizza model (fields: name, price)
     * Create an order model (field: date of the order)
+        * How to work with dates? => https://mongoosejs.com/docs/tutorials/dates.html
+        * The first two code snippets show to define and insert a date (that's all you need)
 
 * Setup relationships between Pizzas, Orders and Customers
     * Place a ref to the customer model in the order schema ("Every order has exaxtly ONE customer")
