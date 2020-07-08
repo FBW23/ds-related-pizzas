@@ -1,8 +1,8 @@
 # Data Modelling - Exercise #2 - References (Ref)
 
-In this exercise we want to train create relationships between MongoDB collections.
+In this exercise we want to train creating relationships between MongoDB collections.
 
-We will do so by create a basic Pizza shop data model.
+We will do so by creating a basic Pizza shop data model.
 
 ## Task: Create a pizza shop data model
 

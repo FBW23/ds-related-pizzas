@@ -8,6 +8,8 @@ mongoose.connect("mongodb://localhost/pizza_db", {
     useUnifiedTopology: true
 })
 
+// SCHEMAS
+
 const AddressSchema = new Schema({
     street: String,
     zipcode: String,
@@ -20,8 +22,23 @@ const CustomerSchema = new Schema({
     address: { type: AddressSchema, required: true }
 }, { versionKey: false }) // => will kick out the __v thing
 
-const Customer = mongoose.model("Customer", CustomerSchema)
+const OrderSchema = new Schema({
+    date: { type: Date, required: true },
+    customer: { ref: 'Customer', type: Schema.Types.ObjectId },
+    pizzas: [{ ref: 'Pizza', type: Schema.Types.ObjectId }]
+})
 
+const PizzaSchema = new Schema({
+    name: { type: String, required: true},
+    price: { type: Number, required: true}    
+})
+
+// MODELS
+const Customer = mongoose.model("Customer", CustomerSchema)
+const Order = mongoose.model("Order", OrderSchema)
+const Pizza = mongoose.model("Pizza", PizzaSchema)
+
+// EXPRESS PART STARTS HERE
 const port = 8000
 app.listen(port, () => {
     console.log('Server started on port ' + port);
@@ -32,7 +49,12 @@ app.get("/seed", async (req, res, next) => {
     try {
 
         // clear / purge all customers in DB
+        await Order.deleteMany()
         await Customer.deleteMany()
+        await Pizza.deleteMany()
+
+        // in order to create an order 
+        // => we need to have customer already, and pizzas too
 
         // create fresh customer
         let customers = await Customer.create([
@@ -50,7 +72,21 @@ app.get("/seed", async (req, res, next) => {
 
         console.log("Created customers in DB:", customers)
 
-        res.send(customers)
+        // create pizzas
+        let pizzas = await Pizza.create([
+            { name: "Margherita", price: 4.99  },
+            { name: "Funghi", price: 5.99  },
+            { name: "Hawaii", price: 6.99  },
+            { name: "Souvlaki", price: 7.99  },
+        ])
+
+        // create orders
+        let orders = await Order.create([
+            { date: "2020-07-08", customer: customers[0]._id, pizzas: pizzas[3]._id },
+            { date: "2020-07-07", customer: customers[0]._id, pizzas: [ pizzas[1]._id, pizzas[2]._id ] },
+        ])
+
+        res.send({ customers, pizzas, orders })
     }
     catch(err) { next(err) }
 
