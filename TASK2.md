@@ -27,6 +27,8 @@ Update your seed route for inserting relational data:
 - Insert two orders:
 	- customer 1 ordered one pizza today
 	- customer 2 ordered two pizzas yesterday
+    - remember you have to insert IDs as references
+    - how to place an array of IDs (=refs): ` pizzas: [ pizzaID, otherPizzaId ] `
 
 Test if it works by starting your app and calling your seed route in the browser 
 
