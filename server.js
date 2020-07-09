@@ -16,22 +16,38 @@ const AddressSchema = new Schema({
     city: String
 }, {_id: false}) // this prevents creation of an ID
 
+
+// 1 Customer - n Orders
+// 1 Order - 1 Customer
+// One-to-Many relationship
+
+// 1 Order - n Pizzas
+// 1 Pizza - n Order
+// Many-to-Many relationship
+
 const CustomerSchema = new Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
-    address: { type: AddressSchema, required: true }
+    address: { type: AddressSchema, required: true } // One-to-One - NESTING
 }, { versionKey: false }) // => will kick out the __v thing
 
 const OrderSchema = new Schema({
     date: { type: Date, required: true },
-    customer: { ref: 'Customer', type: Schema.Types.ObjectId },
-    pizzas: [{ ref: 'Pizza', type: Schema.Types.ObjectId }]
+    customer: { ref: 'Customer', type: Schema.Types.ObjectId }, 
+        // ID field => ObjectId => String 24chars
+        // One-to-Many - REFERENCING
+    pizzas: [{ ref: 'Pizza', type: Schema.Types.ObjectId }] // Many-to-Many  - REFERENCING
 })
 
 const PizzaSchema = new Schema({
     name: { type: String, required: true},
     price: { type: Number, required: true}    
 })
+
+// One-to-One => NESTING (=> nesting a Schema)
+// One-to-Many => REFERENCING (=> outsourcing data to separate collection and just referencing the iD)
+// Many-to-Many => REFERENCING (=> outsourcing data to separate collection and just referencing the iD)
+
 
 // MODELS
 const Customer = mongoose.model("Customer", CustomerSchema)
