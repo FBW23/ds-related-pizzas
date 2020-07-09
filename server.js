@@ -60,6 +60,17 @@ app.listen(port, () => {
     console.log('Server started on port ' + port);
 });
 
+app.get("/orders", async (req, res, next) => {
+
+    const orders = await Order.find()
+        .select("-_id -__v") // trim off fields _id and __v from result
+        .populate("customer", "address.city -_id") // lookup customer document and include the city
+        .populate("pizzas", "name price -_id") // lookup pizzas documents and fetch type & price info 
+  
+    res.send(orders)
+}) 
+
+
 app.get("/seed", async (req, res, next) => {
     
     try {
